@@ -2,6 +2,7 @@ package main.scenarios;
 
 import java.util.List;
 
+import main.firefighters.FireDispatchUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -116,5 +117,27 @@ public class BasicScenarios {
     Assert.assertTrue(firefighterPresentAtFireTwo);
     Assert.assertFalse(basicCity.getBuilding(fireNodes[0]).isBurning());
     Assert.assertFalse(basicCity.getBuilding(fireNodes[1]).isBurning());
+  }
+
+  @Test
+  public void testPermutation() {
+
+    City basicCity = new CityImpl(2, 2, new CityNode(0, 0));
+    FireDispatch fireDispatch = basicCity.getFireDispatch();
+
+    // 4 firefighters should generate 24 permutations
+    fireDispatch.setFirefighters(4);
+    Firefighter[] firefighters = fireDispatch.getFirefighters().stream().toArray(Firefighter[]::new);
+    List<Firefighter[]> allFirefighterPermutations = FireDispatchUtils.permute(firefighters);
+
+    Assert.assertEquals(24, allFirefighterPermutations.size());
+
+    // 6 firefighters should generate 720 permutations
+    fireDispatch.getFirefighters().clear();
+    fireDispatch.setFirefighters(6);
+    firefighters = fireDispatch.getFirefighters().stream().toArray(Firefighter[]::new);
+    allFirefighterPermutations = FireDispatchUtils.permute(firefighters);
+
+    Assert.assertEquals(720, allFirefighterPermutations.size());
   }
 }
