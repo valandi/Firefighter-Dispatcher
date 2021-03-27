@@ -1,7 +1,7 @@
 package main.firefighters;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,8 +49,11 @@ public class FireDispatchImpl implements FireDispatch {
    * Dispatch firefighters using the firefighter permutation that minimizes the total distance traveled.
    * @param burningBuildings CityNodes with burning buildings
    */
-  private void dispatchFirefightersOptimallysButSlow(CityNode... burningBuildings) {
-    throw new NotImplementedException();
+  private void dispatchFirefightersOptimallyButSlow(CityNode... burningBuildings) {
+    // Generate all possible permutations of firefightersRoster
+    // Get the permutation that minimizes that total distance travelled for each firefighter
+    // For i in range(0, firefightersRoster.length)
+    //  dispatchFirefighter(permutation[i], burningBuildings[i])
   }
 
   /**
@@ -70,7 +73,8 @@ public class FireDispatchImpl implements FireDispatch {
   }
 
   /**
-   * Dispatch firefighters greedily, iterating through burningBuildings and sending the closest firefighter
+   * Dispatch firefighters greedily, iterating through burningBuildings and sending the closest firefighter.
+   * If no firefighter is available, do nothing.
    * @param burningBuildings CityNodes with burning buildings
    */
   private void dispatchFirefightersFasterButSubOptimally(CityNode... burningBuildings) {
@@ -81,7 +85,7 @@ public class FireDispatchImpl implements FireDispatch {
   }
 
   /**
-   * Firefighter that minimzes distance to burningBuilding
+   * Firefighter that minimizes distance to burningBuilding
    * @param burningBuilding
    * @return Firefighter that minimzes distance
    */
