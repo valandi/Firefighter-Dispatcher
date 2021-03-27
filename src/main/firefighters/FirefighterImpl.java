@@ -2,19 +2,23 @@ package main.firefighters;
 
 import main.api.CityNode;
 import main.api.Firefighter;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class FirefighterImpl implements Firefighter {
 
+  private CityNode location;
+  private int totalDistanceTraveled;
+
+  public FirefighterImpl(CityNode location) {
+    this.location = location;
+    this.totalDistanceTraveled = 0;
+  }
   @Override
   public CityNode getLocation() {
-    // TODO
-    throw new NotImplementedException();
+    return this.location;
   }
 
   @Override
   public int distanceTraveled() {
-    // TODO
-    throw new NotImplementedException();
+    return this.totalDistanceTraveled;
   }
 }
