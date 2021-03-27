@@ -32,4 +32,10 @@ public class FireDispatchUtils {
         firefighters[a] = firefighters[b];
         firefighters[b] = temp;
     }
+
+    // TODO: Make this actually return the right answer
+    public static Firefighter[] getPermutationThatMinimizesDistance(List<Firefighter[]> permutations) {
+        return permutations.get(0);
+    }
+
 }

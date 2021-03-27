@@ -43,16 +43,26 @@ public class FireDispatchImpl implements FireDispatch {
   }
 
   /**
+   * TODO: Write tests and implement the function to get the permutation that minimizes distance travelled
+   *
    * Dispatch firefighters 100% optimally. Generate all possible firefighter permutations and calculate the collective
    * distance travelled for each firefighter being sent to each burning building.
    * Dispatch firefighters using the firefighter permutation that minimizes the total distance traveled.
    * @param burningBuildings CityNodes with burning buildings
    */
   private void dispatchFirefightersOptimallyButSlow(CityNode... burningBuildings) {
+
     // Generate all possible permutations of firefightersRoster.
+    List<Firefighter[]> allFirefighterPermutations = FireDispatchUtils.permute(firefightersRoster.toArray(new Firefighter[0]));
+
     // Get the permutation that minimizes that total distance travelled for each firefighter
-    // For i in range(0, firefightersRoster.length)
-    //  dispatchFirefighter(permutation[i], burningBuildings[i])
+    Firefighter[] bestPermutation = FireDispatchUtils.getPermutationThatMinimizesDistance(allFirefighterPermutations);
+
+    // Send the ith firefighter to the ith burning building
+    for (int i = 0; i < bestPermutation.length; i++) {
+      dispatchFirefighter(bestPermutation[i], burningBuildings[i]);
+    }
+
   }
 
   /**
