@@ -9,6 +9,7 @@ import main.api.City;
 import main.api.CityNode;
 import main.api.FireDispatch;
 import main.api.Firefighter;
+import main.api.exceptions.NoFireFoundException;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class FireDispatchImpl implements FireDispatch {
@@ -37,7 +38,9 @@ public class FireDispatchImpl implements FireDispatch {
 
   @Override
   public void dispatchFirefighers(CityNode... burningBuildings) {
-    return;
+    if (burningBuildings == null || burningBuildings.length ==0 ) return;
+
+    dispatchFirefightersFasterButSubOptimally(burningBuildings);
   }
 
   /**
@@ -47,7 +50,23 @@ public class FireDispatchImpl implements FireDispatch {
    * @param burningBuildings CityNodes with burning buildings
    */
   private void dispatchFirefightersOptimallysButSlow(CityNode... burningBuildings) {
+    throw new NotImplementedException();
+  }
 
+  /**
+   * Dispatches the firefighter to the CityNode burningNode and the fire is extinguished.
+   * Firefighters location and distance travelled are updated.
+   *
+   * @param firefighter Firefighter to dispatch
+   * @param burningNode CityNode that has a burning building
+   */
+  private void dispatchFirefighter(final Firefighter firefighter, final CityNode burningNode) {
+    firefighter.moveToLocation(burningNode, getDistanceBetweenFirefighterAndCityNode(firefighter, burningNode));
+    try {
+      city.getBuilding(burningNode).extinguishFire();
+    } catch (NoFireFoundException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -55,7 +74,10 @@ public class FireDispatchImpl implements FireDispatch {
    * @param burningBuildings CityNodes with burning buildings
    */
   private void dispatchFirefightersFasterButSubOptimally(CityNode... burningBuildings) {
-    throw new NotImplementedException();
+    for (CityNode nodeWithBurningBuilding : burningBuildings) {
+      getClosestFirefighter(nodeWithBurningBuilding)
+              .ifPresent(firefighter -> dispatchFirefighter(firefighter, nodeWithBurningBuilding));
+    }
   }
 
   /**
@@ -74,6 +96,7 @@ public class FireDispatchImpl implements FireDispatch {
     for (Firefighter firefighter : firefightersRoster) {
       currDistance = getDistanceBetweenFirefighterAndCityNode(firefighter, burningBuilding);
       if (currDistance < minDistance) {
+        minDistance = currDistance;
         closestFirefighter = firefighter;
       }
     }
@@ -85,6 +108,5 @@ public class FireDispatchImpl implements FireDispatch {
     return Math.abs(firefighter.getLocation().getX() - cityNode.getX()) +
             Math.abs(firefighter.getLocation().getY() - cityNode.getY());
   }
-
 
 }

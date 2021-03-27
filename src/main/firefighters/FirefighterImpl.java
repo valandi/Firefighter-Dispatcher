@@ -21,4 +21,9 @@ public class FirefighterImpl implements Firefighter {
   public int distanceTraveled() {
     return this.totalDistanceTraveled;
   }
+
+  public void moveToLocation(CityNode newLocation, int distanceTravelled) {
+    this.totalDistanceTraveled += distanceTravelled;
+    this.location = newLocation;
+  }
 }
